@@ -10,7 +10,7 @@ shows all of the information about a specified deck with options to edit or add 
 import React from "react";
 
 function Deck(){
-
+    return <h2 className="display-4">Deck</h2>
 }
 
 export default Deck
