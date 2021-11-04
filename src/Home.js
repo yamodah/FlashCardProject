@@ -10,13 +10,14 @@ import {Link} from "react-router-dom"
 import {listDecks} from "./utils/api/index.js"
 function Home(){
     const [decks,setDecks]=useState([])
-
-    const loadDecks = ()=>{
-        listDecks().then(setDecks)
-    }
-
+    
     useEffect(()=>{
+        const ac = new AbortController()
+        const loadDecks = ()=>{
+            listDecks().then(setDecks).catch(console.error)
+        }
         loadDecks()
+        return ()=>ac.signal
     },[])
 
    const decksHTML = decks.map((deck)=>(

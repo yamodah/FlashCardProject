@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "./Header";
 import NotFound from "./NotFound";
 import Home from "../Home";
@@ -10,6 +10,7 @@ import AddCard from "../AddCard";
 import EditCard from "../EditCard";
 import {Switch,Route} from "react-router-dom"
 function Layout() {
+  const [deck,setDeck]=useState({cards:[]})
   return (
     <>
       <Header />
@@ -18,22 +19,22 @@ function Layout() {
           <Route exact path="/">  
             <Home/>
           </Route>
-          <Route path="/decks/:deckId/study">
-            <Study/>
+          <Route exact path="/decks/:deckId/study">
+            <Study deck={deck} setDeck={setDeck}/>
           </Route>
-          <Route path="/decks/new">
+          <Route exact path="/decks/new">
             <CreateDeck/>
           </Route>
-          <Route path="/decks/:deckId/edit">
+          <Route  exact path="/decks/:deckId/edit">
             <EditDeck/>
           </Route>
-          <Route path="/decks/:deckId">
-            <Deck/>
+          <Route  exact path="/decks/:deckId">
+            <Deck deck={deck} setDeck={setDeck}/>
           </Route>
-          <Route path="/decks/:deckId/cards/new">
+          <Route  exact path="/decks/:deckId/cards/new">
             <AddCard/>
           </Route>
-          <Route path="/decks/:deckId/cards/:cardId/edit">
+          <Route  exact path="/decks/:deckId/cards/:cardId/edit">
             <EditCard/>
           </Route>
           <Route>
