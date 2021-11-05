@@ -34,7 +34,7 @@ function EditDeck({setDeck,deck}){
       const handleSubmission =(event)=>{
           event.preventDefault()
           const ac = new AbortController()
-          updateDeck(deck,ac.signal).then((newDeck)=>history.push(`/decks/${newDeck.id}`)).catch(console.error)
+          updateDeck(formData,ac.signal).then((newDeck)=>history.push(`/decks/${newDeck.id}`)).catch(console.error)
           return () => ac.abort()
       }
       const cancelHandler =()=>{
