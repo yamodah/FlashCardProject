@@ -46,6 +46,24 @@
       "back": "Renders the first matching child <Route> ",
       "deckId": 2,
       "id": 5
+    },
+    {
+      "front": "here we go final component",
+      "back": "will this work inshallah ",
+      "deckId": 3,
+      "id": 6
+    },
+    {
+      "front": "bob",
+      "back": "bob the builder",
+      "deckId": 3,
+      "id": 7
+    },
+    {
+      "front": "I need this to work",
+      "back": "PLZ WROK JSUT",
+      "deckId": 3,
+      "id": 8
     }
   ]
 }

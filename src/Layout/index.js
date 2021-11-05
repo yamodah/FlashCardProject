@@ -12,7 +12,8 @@ import {Switch,Route} from "react-router-dom"
 function Layout() {
   const [decks,setDecks]=useState([])
   const [deck,setDeck]=useState({cards:[]})
-  
+  const [currentCardIndex, setCurrentCardIndex] = useState(0)
+  const [card, setCard] = useState({})
   return (
     <>
       <Header />
@@ -22,7 +23,7 @@ function Layout() {
             <Home decks={decks} setDecks={setDecks}/>
           </Route>
           <Route exact path="/decks/:deckId/study">
-            <Study deck={deck} setDeck={setDeck}/>
+            <Study deck={deck} setDeck={setDeck} currentCardIndex={currentCardIndex} setCurrentCardIndex={setCurrentCardIndex}/>
           </Route>
           <Route exact path="/decks/new">
             <CreateDeck/>
@@ -37,7 +38,7 @@ function Layout() {
             <AddCard/>
           </Route>
           <Route  exact path="/decks/:deckId/cards/:cardId/edit">
-            <EditCard/>
+            <EditCard deck={deck} setDeck={setDeck} card={card} setCard={setCard}/>
           </Route>
           <Route>
             <NotFound />

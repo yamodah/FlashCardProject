@@ -46,7 +46,7 @@ function CreateDeck(){
                     <input type="text" className="form-control" id="name" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
                     </label>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label htmlFor="description" style={{width:"100%"}}><h6 style={{marginBottom:"10px"}}>Description</h6>
                     <textarea  className="form-control" id="decription" name="description" placeholder="description" value={formData.description} onChange={handleChange}/>
                     </label>

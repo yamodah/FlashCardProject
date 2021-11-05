@@ -42,7 +42,10 @@ function Deck({deck ,setDeck}){
         }
         return ()=>ac.abort()
     }
-   const cardsHTML = deck.cards.map((card)=>(
+
+if(!deck.name)return <h5>loading...</h5>
+
+const cardsHTML = deck.cards.map((card)=>(
     <div key={card.id} className="card" style={{width:"100%"}}>
     <div className="card-body">
      <div style={{display:"flex", justifyContent:"space-between"}}>
@@ -58,9 +61,6 @@ function Deck({deck ,setDeck}){
     </div>
   </div>))
 
-
-
-if(!deck.name)return <h5>loading...</h5>
 return (<div><nav aria-label="breadcrumb">
 <ol className="breadcrumb">
   <li className="breadcrumb-item"><Link to="/">Home</Link></li>

@@ -12,18 +12,17 @@ import {Link,useParams,useHistory} from "react-router-dom";
 import { readDeck } from "./utils/api";
 
 
-function Study({deck,setDeck}){
+function Study({deck,setDeck,currentCardIndex,setCurrentCardIndex}){
     const {cards} = deck
-    const [currentCardIndex, setCurrentCardIndex] = useState(0)
     const [cardFace, setCardFace]= useState("front")
     const {deckId} = useParams()
     const history = useHistory()
-    
+    console.log(cards)
     useEffect(()=>{
         const ac = new AbortController()
         setDeck({cards:[]})
         const loadDeck = ()=>{
-            readDeck(deckId).then((theDeck)=>setDeck(theDeck))
+            readDeck(deckId).then((theDeck)=>setDeck(theDeck)).catch(console.error)
         }
         loadDeck()
         return ()=>ac.signal
@@ -45,8 +44,9 @@ function Study({deck,setDeck}){
            
         }
     }
-    const card = deck.cards[currentCardIndex]
+    
 if(!deck.name)return <h5>loading...</h5>
+
 if(deck.cards.length<3){
     return(
         <div>
@@ -60,9 +60,10 @@ if(deck.cards.length<3){
             <h4>{`${deck.name}:`}Study</h4>
             <h5>Not enough Cards.</h5>
             <p>cmon mate you need at least 3 cards to call this "studying"... there are only {deck.cards.length} cards in this deck.</p>
+            <Link to={`/decks/${deck.id}/cards/new`} className="btn btn-primary" style={{margin:"10px 5px 10px 5px"}}>Add Cards</Link> 
         </div>
     )
-}
+}const card = deck.cards[currentCardIndex]
 return (<div><nav aria-label="breadcrumb">
 <ol className="breadcrumb">
   <li className="breadcrumb-item"><Link to="/">Home</Link></li>

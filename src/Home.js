@@ -12,6 +12,7 @@ function Home({decks,setDecks}){
 
     useEffect(()=>{
         const ac = new AbortController()
+        setDecks([])
         const loadDecks = ()=>{
             listDecks(ac.signal).then(setDecks).catch(console.error)
         }
