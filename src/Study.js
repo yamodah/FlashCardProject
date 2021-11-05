@@ -8,7 +8,7 @@ allows the user to study the cards from a specified deck
 
 */
 import React, { useState,useEffect } from "react";
-import {Link,useParams} from "react-router-dom";
+import {Link,useParams,useHistory} from "react-router-dom";
 import { readDeck } from "./utils/api";
 
 
@@ -17,19 +17,33 @@ function Study({deck,setDeck}){
     const [currentCardIndex, setCurrentCardIndex] = useState(0)
     const [cardFace, setCardFace]= useState("front")
     const {deckId} = useParams()
+    const history = useHistory()
     
     useEffect(()=>{
         const ac = new AbortController()
+        setDeck({cards:[]})
         const loadDeck = ()=>{
             readDeck(deckId).then((theDeck)=>setDeck(theDeck))
         }
         loadDeck()
         return ()=>ac.signal
     },[deckId,setDeck])
-    console.log(cards[0])
+    //console.log(cards[0])
     const flipHandler = () => cardFace === "front"? setCardFace("back"): setCardFace("front")
     const handleNext = () => {
-
+        if(currentCardIndex < cards.length-1){
+            setCurrentCardIndex((currentCardIndex)=>currentCardIndex+1)
+            setCardFace("front")
+        }else{
+            if(window.confirm(`Would you like to start ${deck.name} over again ? Otherwise press cancel to head back to the Home screen.`)){
+                setCurrentCardIndex(0)
+                setCardFace("front")
+            }else{
+                history.push("/")
+            }
+            //console.log("add window message here maybe nest another conditional")
+           
+        }
     }
     const card = deck.cards[currentCardIndex]
 if(!deck.name)return <h5>loading...</h5>
@@ -57,12 +71,12 @@ return (<div><nav aria-label="breadcrumb">
 </ol>
 </nav>
 <h2 style={{textAlign:"center"}}>Study: {deck.name}</h2>
-{card.id && <div key={card.id}className="card" style={{width:"100%"}}><div className="card-body">
-    <h5 style={{marginBottom:"15px"}}>Card {card.id} of {cards.length}</h5>
+{<div key={card.id}className="card" style={{width:"100%"}}><div className="card-body">
+    <h5 style={{marginBottom:"15px"}}>Card {currentCardIndex+1} of {cards.length}</h5>
     <p className="card-text" style={{fontSize:"18", textAlign:"center"}}>{cardFace==="front"?card.front:card.back}</p></div>
     <div style={{display:"flex"}}>
     <button onClick={flipHandler} className="btn btn-secondary" style={{margin:"10px 0px 10px 15px"}}>Flip</button>
-   {cardFace==="back" && <button className="btn btn-primary" style={{margin:"10px 5px 10px 5px"}}>Next</button>}
+   {cardFace==="back" && <button onClick={handleNext}className="btn btn-primary" style={{margin:"10px 5px 10px 5px"}}>Next</button>}
    </div>
  </div>}
 </div>)

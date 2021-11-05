@@ -5,20 +5,30 @@
 shows a list of decks with options to create, study, view, or delete a deck
 
 */
-import React,{ useEffect,useState } from "react";
+import React,{ useEffect } from "react";
 import {Link} from "react-router-dom"
-import {listDecks} from "./utils/api/index.js"
-function Home(){
-    const [decks,setDecks]=useState([])
-    
+import {listDecks, deleteDeck} from "./utils/api/index.js"
+function Home({decks,setDecks}){
+
     useEffect(()=>{
         const ac = new AbortController()
         const loadDecks = ()=>{
-            listDecks().then(setDecks).catch(console.error)
+            listDecks(ac.signal).then(setDecks).catch(console.error)
         }
         loadDecks()
-        return ()=>ac.signal
-    },[])
+        return ()=>ac.abort()
+    },[setDecks])
+
+    const deleteDeckHandler = ({target:{id}}) =>{
+        const ac =  new AbortController()
+        
+        if(window.confirm("Are you sure you want to delete this deck ? This cannot be undone.")){
+            
+            deleteDeck(id,ac.signal).catch(console.error)
+            listDecks().then(setDecks).catch(console.error)
+        }
+        return ()=>ac.abort()
+    }
 
    const decksHTML = decks.map((deck)=>(
    <div key={deck.id}className="card" style={{width:"100%"}}><div className="card-body">
@@ -30,7 +40,7 @@ function Home(){
     <div style={{display:"flex"}}>
     <Link to={`/decks/${deck.id}`}type="button" className="btn btn-secondary" style={{margin:"10px 0px 10px 15px"}}>View</Link>
     <Link to={`/decks/${deck.id}/study`} className="btn btn-secondary" style={{margin:"10px 5px 10px 5px"}}>Study</Link>
-    <button className="btn btn-danger" style={{margin:"10px 10px 10px auto"}}>Delete</button>
+    <button id={deck.id} key={deck.id} className="btn btn-danger" style={{margin:"10px 10px 10px auto"}} onClick={deleteDeckHandler}>Delete</button>
    </div>
  </div>))
  
