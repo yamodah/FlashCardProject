@@ -17,7 +17,9 @@ function Study({deck,setDeck,currentCardIndex,setCurrentCardIndex}){
     const [cardFace, setCardFace]= useState("front")
     const {deckId} = useParams()
     const history = useHistory()
-    
+
+    //cleans up prior deck and loads new one
+    //deckId is accessed via the url params
     useEffect(()=>{
         const ac = new AbortController()
         setDeck({cards:[]})
@@ -29,6 +31,12 @@ function Study({deck,setDeck,currentCardIndex,setCurrentCardIndex}){
     },[deckId,setDeck])
     
     const flipHandler = () => cardFace === "front"? setCardFace("back"): setCardFace("front")
+
+    //currentCardIndex comes in handy here without having to access each cards id
+    //we can start we a index of 0 and keep adding till 
+    //the index is eqaul to the length - 1 of the cards array 
+    //then we ask the user what they wish to do restart the same deck 
+    //if they say no we  send them home otherwise set the currentCardIndex to 0 
     const handleNext = () => {
         if(currentCardIndex < cards.length-1){
             setCurrentCardIndex((currentCardIndex)=>currentCardIndex+1)
@@ -42,9 +50,10 @@ function Study({deck,setDeck,currentCardIndex,setCurrentCardIndex}){
             }
         }
     }
-    
+    //consditionla to render a loading screen until the deck is set 
 if(!deck.name)return <h5>loading...</h5>
 
+    //conditional to handle a deck that is too small to study (per the requirements)
 if(deck.cards.length<3){
     return(
         <div>
@@ -61,7 +70,10 @@ if(deck.cards.length<3){
             <Link to={`/decks/${deck.id}/cards/new`} className="btn btn-primary" style={{margin:"10px 5px 10px 5px"}}>Add Cards</Link> 
         </div>
     )
-}const card = deck.cards[currentCardIndex]
+}
+
+//don't intiatlize card varilable until deck is set so we do this under the conditional
+const card = deck.cards[currentCardIndex]
 return (<div><nav aria-label="breadcrumb">
 <ol className="breadcrumb">
   <li className="breadcrumb-item"><Link to="/">Home</Link></li>

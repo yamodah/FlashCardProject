@@ -9,7 +9,7 @@ import React,{ useEffect } from "react";
 import {Link} from "react-router-dom"
 import {listDecks, deleteDeck} from "./utils/api/index.js"
 function Home({decks,setDecks}){
-
+    //loading loading the decks array from the api 
     useEffect(()=>{
         const ac = new AbortController()
         setDecks([])
@@ -31,6 +31,9 @@ function Home({decks,setDecks}){
         return ()=>ac.abort()
     }
 
+    // mapping of decks array 
+    //by accessing each deck individually we have acces to info needed to constrcut a card with info 
+    //relating to the specific deck
    const decksHTML = decks.map((deck)=>(
    <div key={deck.id}className="card" style={{width:"100%"}}><div className="card-body">
     <div style={{display:"flex"}}>
@@ -45,7 +48,8 @@ function Home({decks,setDecks}){
    </div>
  </div>))
  
-
+//conditional to check decks array has not loaded 
+// if it hasnt user will see a laoding screen
 if(decks.length < 1){
     return (<div>
         <p>Chill we loading the decks...</p>

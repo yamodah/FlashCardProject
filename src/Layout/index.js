@@ -10,10 +10,13 @@ import AddCard from "../AddCard";
 import EditCard from "../EditCard";
 import {Switch,Route} from "react-router-dom"
 function Layout() {
+  //all states except formData live in this parent element 
+
   const [decks,setDecks]=useState([])
   const [deck,setDeck]=useState({cards:[]})
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [card, setCard] = useState({})
+  
   return (
     <>
       <Header />

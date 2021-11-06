@@ -15,6 +15,9 @@ import { readDeck ,deleteDeck, deleteCard } from "./utils/api";
 function Deck({deck ,setDeck}){
     const history = useHistory()
     const {deckId} = useParams()
+
+    //first cleans up any deck that mightve been set previously 
+    //loads the deck based on the url params 
     useEffect(()=>{
         const ac = new AbortController()
         setDeck({cards:[]})
@@ -24,7 +27,11 @@ function Deck({deck ,setDeck}){
         loadDeck()
         return ()=>ac.abort()
     },[deckId,setDeck])
-   
+
+
+   //warns user prior to delteing card 
+   //we pass in card.id into the delete handler to target the specific card 
+   //we want to delete without much fuss
     const deleteThisCardHandler = (cardToDelete) =>{
         const ac = new AbortController()
         if(window.confirm("Are you sure you want to delete this card ? This cannot be undone.")){
@@ -33,6 +40,9 @@ function Deck({deck ,setDeck}){
         }
         return () => ac.abort()
     };
+
+    //similar idea to the above delete handler minus the targeting
+    // because there is only one deck we can delete from this page
     const deleteDeckHandler = () =>{
         const ac =  new AbortController()
         if(window.confirm("Are you sure you want to delete this deck ? This cannot be undone.")){
@@ -42,8 +52,16 @@ function Deck({deck ,setDeck}){
         }
         return ()=>ac.abort()
     }
+    //conditional to display a "loading screen" until the deck is set
 
 if(!deck.name)return <h5>loading...</h5>
+
+    // mapping to access the individual cards within the deck
+    //once access we have all the info we need 
+    //including the card.id for our delete handler
+    // putting this above the conditional throws an error 
+    //because we cannot access/map cards whose deck has not been defined
+    //putting it after the conditional prevents the mapping until deck is set
 
 const cardsHTML = deck.cards.map((card)=>(
     <div key={card.id} className="card" style={{width:"100%"}}>

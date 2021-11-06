@@ -1,11 +1,7 @@
 /*
 Edit Deck
-
 `/decks/:deckId/edit`
-
 allows the user to modify information on an existing deck
-
-
 */
 import React, {useEffect, useState} from "react";
 import { useParams,Link,useHistory } from "react-router-dom";
@@ -18,6 +14,10 @@ function EditDeck({setDeck,deck}){
         name:deck.name,
         description:deck.description,
     }
+
+    //populate the form input boxes with our intiial formState 
+    // which in turn is populated by the deck that is passed into
+    //the component as well as set with the useEffect 
     const [formData, setFormData] = useState(initialFormState)
     useEffect(()=>{
         const ac = new AbortController()
@@ -28,12 +28,15 @@ function EditDeck({setDeck,deck}){
         return () => ac.abort()
     },[deckId,setDeck])
 
+    //gerneric handle change function
     const handleChange = ({ target }) => {
         setFormData({
           ...deck,
           [target.name]: target.value,
         });
       };
+
+    //upon submission we update the deck and then push the user to the newUpdated deck's url 
       const handleSubmission =(event)=>{
           event.preventDefault()
           const ac = new AbortController()

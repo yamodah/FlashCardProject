@@ -15,7 +15,11 @@ import CardForm from "./CardForm";
 function AddCard({deck,setDeck,card}){
    
     const {deckId} = useParams()
+
+    //I guess this card is new 
     const newCard = true
+
+    // set deck based upon the deckId param from the url
     useEffect(()=>{
         const ac = new AbortController()
         readDeck(deckId).then(setDeck).catch(console.error)

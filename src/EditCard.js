@@ -14,6 +14,8 @@ function EditCard({deck,setDeck,card,setCard}){
     const {cardId, deckId} = useParams()
     const newCard = false
     
+    // here we set the deck based on the deckId param in the url 
+    // as well as set the card based on the cardId param in the url
     useEffect(()=>{
         const ac = new AbortController()
         readDeck(deckId, ac.signal).then(setDeck).catch(console.error)
@@ -24,16 +26,8 @@ function EditCard({deck,setDeck,card,setCard}){
         return ()=>ac.abort()
     },[setDeck, cardId,deckId, setCard])
    
-    // useEffect(()=>{
-    //     const ac = new AbortController()
-    //     setCard({})
-    //     readDeck(deckId, ac.signal).then((theDeck)=>setDeck(theDeck)).catch(console.error)
-    //     readCard(cardId, ac.signal).then(setCard).catch(console.error)
-    //     return ()=>ac.abort()
-        
-    // },[cardId,deckId,setDeck,setCard])
     
-
+    //handlees loading sscreen while deck is set
     if(!deck.id) return <h6>one moment please while we load your card...</h6>
     return  (
         <div>

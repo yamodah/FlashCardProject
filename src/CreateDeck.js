@@ -12,21 +12,28 @@ import { createDeck } from "./utils/api";
 import {useHistory,Link} from "react-router-dom"
 
 function CreateDeck(){
+    // empty formdata for the intitial formstate to keep inputs blank but establish their key value pairs
+
     const initialFormState = {name:"",description:""}
+    // useState to handle the change when inputting into the fields
     const [formData,setFormData] = useState(initialFormState)
     const history = useHistory()
    
     
-    // const {deckId} = useParams()
+    //when you cancel you go home just seems like the right place to send someone who cancels 
+    //the create deck function
     const cancelHandler =()=>{
         history.push("/")
     }
+    //when we submit the form we first going to create a deck using our form object
+    //then we send the user to the newly created deck's "view" page
     const submitHandler =(event)=>{
         event.preventDefault()
         const ac = new AbortController()
         createDeck(formData,ac.signal).then((newDeck)=>history.push(`/decks/${newDeck.id}`)).catch(console.error)
         return () => ac.abort()
     }
+    //generic handle change for inputs of forms function
     const handleChange = ({ target }) => {
         setFormData({
           ...formData,

@@ -2,12 +2,17 @@ import React,{useState, useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom"
 import {updateCard , createCard} from "./utils/api/index"
 
+//handles both adding and editing cards 
+//(only becuase of the project requirements other wise this kind of seems like an unneeded combination that only makes things messy)
 function CardForm ({card, deck,newCard}){
     const {deckId} = useParams()
     const history = useHistory()
     const  initialFormState = !newCard ? {...card}:{front:"",back:""}
     const [formData, setFormData] = useState({...initialFormState})
-    
+
+    //either populates the form or empties the form
+    //depending on if card is set to an actual card 
+    //or just an empty object
     useEffect(()=>{
         setFormData({...card})
     },[card])
@@ -15,6 +20,9 @@ function CardForm ({card, deck,newCard}){
     const cancelHandler =()=>{
         history.push(`/decks/${deckId}`)
     }
+
+    //if the card is new want to create a card 
+    //if its not new we just want to update an already existing card
     const submitHandler =(event)=>{
         event.preventDefault()
         const ac = new AbortController()
@@ -27,6 +35,8 @@ function CardForm ({card, deck,newCard}){
         }
         return () => ac.abort()
     }
+
+    //generic handle change function
     const handleChange = ({ target }) => {
 
         setFormData({
