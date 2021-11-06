@@ -12,7 +12,7 @@ import { useParams,Link,useHistory } from "react-router-dom";
 import {readDeck, updateDeck} from "./utils/api/index"
 
 function EditDeck({setDeck,deck}){
-    const params = useParams()
+    const {deckId} = useParams()
     const history = useHistory()
     const initialFormState ={
         name:deck.name,
@@ -21,9 +21,12 @@ function EditDeck({setDeck,deck}){
     const [formData, setFormData] = useState(initialFormState)
     useEffect(()=>{
         const ac = new AbortController()
-        readDeck(params.deckId, ac.signal).then((CorrectDeck)=>setDeck(CorrectDeck)).catch(console.error)
+        readDeck(deckId, ac.signal).then((CorrectDeck)=>{
+            setDeck(CorrectDeck)
+            (setFormData({...CorrectDeck}))
+        }).catch(console.error)
         return () => ac.abort()
-    },[params.deckId,setDeck])
+    },[deckId,setDeck])
 
     const handleChange = ({ target }) => {
         setFormData({

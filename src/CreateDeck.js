@@ -48,7 +48,7 @@ function CreateDeck(){
                 </div>
                 <div className="form-group">
                     <label htmlFor="description" style={{width:"100%"}}><h6 style={{marginBottom:"10px"}}>Description</h6>
-                    <textarea  className="form-control" id="decription" name="description" placeholder="description" value={formData.description} onChange={handleChange}/>
+                    <textarea  type="text" className="form-control" id="decription" name="description" placeholder="description" value={formData.description} onChange={handleChange}/>
                     </label>
                 </div>
                 <button type="submit" className="btn btn-secondary" style={{marginRight:"5px"}} onClick={cancelHandler}>Cancel</button>

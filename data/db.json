@@ -64,6 +64,18 @@
       "back": "PLZ WROK JSUT",
       "deckId": 3,
       "id": 8
+    },
+    {
+      "front": "will this work",
+      "back": "plsss work work",
+      "deckId": 3,
+      "id": 9
+    },
+    {
+      "front": "pizza pizza",
+      "back": "pls find this text",
+      "deckId": 1,
+      "id": 10
     }
   ]
 }
