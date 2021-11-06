@@ -17,7 +17,7 @@ function Study({deck,setDeck,currentCardIndex,setCurrentCardIndex}){
     const [cardFace, setCardFace]= useState("front")
     const {deckId} = useParams()
     const history = useHistory()
-    console.log(cards)
+    
     useEffect(()=>{
         const ac = new AbortController()
         setDeck({cards:[]})
@@ -27,7 +27,7 @@ function Study({deck,setDeck,currentCardIndex,setCurrentCardIndex}){
         loadDeck()
         return ()=>ac.signal
     },[deckId,setDeck])
-    //console.log(cards[0])
+    
     const flipHandler = () => cardFace === "front"? setCardFace("back"): setCardFace("front")
     const handleNext = () => {
         if(currentCardIndex < cards.length-1){
@@ -40,8 +40,6 @@ function Study({deck,setDeck,currentCardIndex,setCurrentCardIndex}){
             }else{
                 history.push("/")
             }
-            //console.log("add window message here maybe nest another conditional")
-           
         }
     }
     

@@ -35,7 +35,7 @@ function Layout() {
             <Deck deck={deck} setDeck={setDeck} />
           </Route>
           <Route  exact path="/decks/:deckId/cards/new">
-            <AddCard deck={deck} setDeck={setDeck}/>
+            <AddCard deck={deck} setDeck={setDeck} card={card}/>
           </Route>
           <Route  exact path="/decks/:deckId/cards/:cardId/edit">
             <EditCard deck={deck} setDeck={setDeck} card={card} setCard={setCard}/>

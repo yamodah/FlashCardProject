@@ -53,7 +53,7 @@ if(decks.length < 1){
      </div>)
 }
 return (
-<div style={{marginBottom:"25px"}}>
+<div style={{marginBottom:"50px"}}>
 <Link to="/decks/new"type="button" className="btn btn-secondary" style={{marginBottom:"15px"}}>Create Deck</Link>
   {decksHTML}
 </div>

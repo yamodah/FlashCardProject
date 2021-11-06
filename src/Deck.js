@@ -47,6 +47,7 @@ if(!deck.name)return <h5>loading...</h5>
 
 const cardsHTML = deck.cards.map((card)=>(
     <div key={card.id} className="card" style={{width:"100%"}}>
+
     <div className="card-body">
      <div style={{display:"flex", justifyContent:"space-between"}}>
          <div style={{width:"50%"}}>{card.front}</div>
@@ -76,7 +77,10 @@ return (<div><nav aria-label="breadcrumb">
     <button className="btn btn-danger" style={{margin:"10px 10px 10px auto"}} onClick={deleteDeckHandler}>Delete</button>    
 </div>
 <h3>Cards</h3>
-{cardsHTML}
+<div style={{marginBottom:"50px"}}>
+    {cardsHTML}
+</div>
+
 </div>)
 }
 

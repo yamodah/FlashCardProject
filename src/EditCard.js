@@ -8,11 +8,11 @@ allows the user to modify information on an existing card
 import React, { useEffect} from "react";
 import { useParams, Link} from "react-router-dom"
 import {readCard, readDeck } from "./utils/api/index"
-import EditCardForm from "./EditCardForm"
+import CardForm from "./CardForm"
 function EditCard({deck,setDeck,card,setCard}){
 
     const {cardId, deckId} = useParams()
-    
+    const newCard = false
     
     useEffect(()=>{
         const ac = new AbortController()
@@ -42,7 +42,7 @@ function EditCard({deck,setDeck,card,setCard}){
                 {deck.name && <li className="breadcrumb-item"><Link to={`/decks/${deck.id}`}>{deck.name}</Link></li>}
                 <li className="breadcrumb-item active" aria-current="page">edit Deck</li>
             </ol>
-            <EditCardForm  card={card} deck={deck} setCard={setCard}/>
+            <CardForm  card={card} deck={deck} newCard={newCard}/>
         </div>)
 }
 

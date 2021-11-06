@@ -1,28 +1,16 @@
 import React,{useState, useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom"
-import {updateCard} from "./utils/api/index"
+import {updateCard , createCard} from "./utils/api/index"
 
-function EditCardForm ({card, deck, setDeck, setCard}){
+function CardForm ({card, deck,newCard}){
     const {deckId} = useParams()
     const history = useHistory()
-    const  initialFormState ={
-        ...card
-    }
+    const  initialFormState = !newCard ? {...card}:{front:"",back:""}
     const [formData, setFormData] = useState({...initialFormState})
-    console.log(formData)
+    
     useEffect(()=>{
         setFormData({...card})
     },[card])
-    // useEffect(()=>{
-    //     const ac = new AbortController()
-    //     readDeck(deckId, ac.signal).then(setDeck).catch(console.error)
-    //     readCard(cardId, ac.signal).then((theCard)=>{
-    //         setCard(theCard)
-    //         setFormData({...theCard})
-    //     })
-    //     .catch(console.error)
-    //     return ()=>ac.abort()
-    // },[setDeck, cardId,deckId, setCard])
 
     const cancelHandler =()=>{
         history.push(`/decks/${deckId}`)
@@ -30,13 +18,19 @@ function EditCardForm ({card, deck, setDeck, setCard}){
     const submitHandler =(event)=>{
         event.preventDefault()
         const ac = new AbortController()
-        updateCard(formData,ac.signal).then(()=>history.push(`/decks/${deck.id}`)).catch(console.error)
+        if(newCard){
+            createCard(deckId,formData,ac.signal).then(()=>history.push(`/decks/${deck.id}`)).catch(console.error)
+
+        } else{
+            updateCard(formData,ac.signal).then(()=>history.push(`/decks/${deck.id}`)).catch(console.error)
+  
+        }
         return () => ac.abort()
     }
     const handleChange = ({ target }) => {
-        console.log(card)
+
         setFormData({
-          ...card,
+          ...formData,
           [target.name]: target.value,
         });
       };
@@ -57,4 +51,4 @@ function EditCardForm ({card, deck, setDeck, setCard}){
     </form>)
 }
 
-export default EditCardForm
+export default CardForm
